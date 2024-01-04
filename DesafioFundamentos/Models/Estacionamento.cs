@@ -4,7 +4,7 @@ namespace DesafioFundamentos.Models
     {
         private decimal precoInicial = 0;
         private decimal precoPorHora = 0;
-        private List<string> veiculos = new List<string>();
+        private Dictionary<string, DateTime> veiculos = new Dictionary<string, DateTime>();
 
         public Estacionamento(decimal precoInicial, decimal precoPorHora)
         {
@@ -18,7 +18,7 @@ namespace DesafioFundamentos.Models
             // *IMPLEMENTE AQUI*
             Console.WriteLine("Digite a placa do veículo para estacionar:");
             string veiculo = Console.ReadLine();
-            veiculos.Add(veiculo);
+            veiculos.Add(veiculo, DateTime.Now);
         }
 
         public void RemoverVeiculo()
@@ -30,15 +30,15 @@ namespace DesafioFundamentos.Models
             string placa = Console.ReadLine();
 
             // Verifica se o veículo existe
-            if (veiculos.Any(x => x.ToUpper() == placa.ToUpper()))
+            if (veiculos.Any(x => x.Key.ToUpper() == placa.ToUpper()))
             {
-                Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
+                // Console.WriteLine("Digite a quantidade de horas que o veículo permaneceu estacionado:");
 
                 // TODO: Pedir para o usuário digitar a quantidade de horas que o veículo permaneceu estacionado,
                 // TODO: Realizar o seguinte cálculo: "precoInicial + precoPorHora * horas" para a variável valorTotal                
                 // *IMPLEMENTE AQUI*
-                string horasStr = Console.ReadLine();
-                int horas = Convert.ToInt32(horasStr);
+                // string horasStr = Console.ReadLine();
+                int horas = (DateTime.Now - veiculos[placa]).Hours;
                 decimal valorTotal = this.precoInicial + (this.precoPorHora * horas); 
 
                 // TODO: Remover a placa digitada da lista de veículos
@@ -62,7 +62,7 @@ namespace DesafioFundamentos.Models
                 // *IMPLEMENTE AQUI*
                 foreach (var veiculo in veiculos)
                 {
-                    Console.WriteLine(veiculo);
+                    Console.WriteLine(veiculo.Key);
                 }
             }
             else
